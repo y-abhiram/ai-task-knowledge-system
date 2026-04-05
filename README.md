@@ -2,6 +2,10 @@
 
 A full-stack web application that combines task management with AI-powered semantic document search. Built with FastAPI (Python), React (TypeScript), MySQL, and FAISS vector search.
 
+## 🎥 Demo Video
+
+Watch the application in action: [Demo Video](https://drive.google.com/file/d/1HzTYoMc8q7WOn9_06Ttr7-15Oh8hu1Y4/view?usp=sharing)
+
 ## 🎯 Project Overview
 
 This system demonstrates modern software architecture with:
@@ -456,59 +460,7 @@ FutureTransformation/
 3. **Index Persistence**: FAISS index saved to disk for restart resilience
 4. **Embedding Caching**: Embeddings computed once per document, reused for all searches
 
-## 🚀 Production Considerations
 
-If deploying to production, consider:
-
-1. **Security**
-   - Change `SECRET_KEY` to cryptographically secure random string
-   - Use environment variables for all secrets
-   - Enable HTTPS
-   - Add rate limiting
-   - Implement CSRF protection
-
-2. **Performance**
-   - Use FAISS IVF index for >10k documents
-   - Add Redis caching for frequent queries
-   - Enable connection pooling for MySQL
-   - Use Nginx for static file serving
-
-3. **Scalability**
-   - Containerize with Docker
-   - Use Kubernetes for orchestration
-   - Add message queue (Celery) for async tasks
-   - Implement horizontal scaling
-
-4. **Monitoring**
-   - Add logging (ELK stack)
-   - Implement metrics (Prometheus)
-   - Set up alerts (PagerDuty)
-   - Track errors (Sentry)
-
-## 🤝 Contributing
-
-This is an assignment project. For production use, add:
-- Unit tests (pytest for backend, Jest for frontend)
-- Integration tests
-- E2E tests (Playwright)
-- CI/CD pipeline (GitHub Actions)
-
-## 📝 License
-
-This project is for educational purposes.
-
-## 👨‍💻 Author
-
-Built for Future Transformation AI Developer Intern Interview
-
-## 📞 Support
-
-For issues, please check:
-1. Database connection in `.env`
-2. MySQL service is running
-3. Python virtual environment is activated
-4. Backend is running before starting frontend
-5. CORS settings allow `http://localhost:5173`
 
 **Common Issues:**
 - Port 8000 already in use: Change port in uvicorn command
@@ -518,4 +470,3 @@ For issues, please check:
 
 ---
 
-**Happy Coding!** 🎉

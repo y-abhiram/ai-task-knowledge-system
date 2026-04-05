@@ -95,14 +95,34 @@ class EmbeddingService:
             self._rebuild_index()
 
     def _rebuild_index(self):
+        from app.core.database import SessionLocal
+        from app.repositories.document_repository import DocumentRepository
+
         dimension = 384
         self.index = faiss.IndexFlatIP(dimension)
 
         sorted_items = sorted(self.document_map.items(), key=lambda x: x[0])
         new_doc_map = {}
 
-        for new_idx, (old_idx, doc_info) in enumerate(sorted_items):
-            new_doc_map[new_idx] = doc_info
+        # Re-add embeddings for remaining documents
+        db = SessionLocal()
+        try:
+            doc_repo = DocumentRepository(db)
+
+            for new_idx, (old_idx, doc_info) in enumerate(sorted_items):
+                doc_id = doc_info['doc_id']
+                document = doc_repo.get_by_id(doc_id)
+
+                if document and document.content:
+                    # Regenerate embedding and add to new index
+                    embedding = self.generate_embedding(document.content)
+                    embedding = embedding.reshape(1, -1).astype('float32')
+                    self.index.add(embedding)
+
+                    # Update document map with new index position
+                    new_doc_map[new_idx] = doc_info
+        finally:
+            db.close()
 
         self.document_map = new_doc_map
         self._save_index()
